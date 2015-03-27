@@ -43,6 +43,8 @@ of the id_rsa file)
 #configure
   * rcron.py
 ```
+    #which db should we write to
+    self.db = "rcron"
     #set where the cache file should be written
     self.cache_file = "/tmp/rcron.cache"
     #set where the temp cache file should be written
@@ -57,7 +59,8 @@ of the id_rsa file)
   * lib/helper.py
 ```
     #set appropriate values within the dbConnect() function for your mysql server.  ssl connections are
-    supported if ssl_ca, ssl_cert, and ssl_key variables are set to other than None.
+    # supported if ssl_ca, ssl_cert, and ssl_key variables are set to other than None.  if ssl is not to be 
+    # used, then comment out ssl_ca, ssl_cert, ssl_key from config = {}
     db_host = "127.0.0.1"
     db_user = "root"
     db_passwd = "root"
