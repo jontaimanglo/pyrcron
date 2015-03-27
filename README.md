@@ -1,4 +1,4 @@
-# rcron
+# pypyrcron
 Remote cron (via ssh)
 
 ## requirements
@@ -14,7 +14,7 @@ to consolidate and automate this by securely (via ssh) connecting to different s
 run scripts.
 
 ## how?
-rcron is pretty basic, but any cron will require at least 3 items: auth, system, and a cron.
+pyrcron is pretty basic, but any cron will require at least 3 items: auth, system, and a cron.
 * auth: 
   * username: username used to connect to a system and run cron under
   * password: this can be a string, a path to a id_rsa file, or the contents
@@ -41,19 +41,19 @@ of the id_rsa file)
     for long running crons
 
 #configure
-  * rcron.py
+  * pyrcron.py
 ```
     #which db should we write to
-    self.db = "rcron"
+    self.db = "pyrcron"
     #set where the cache file should be written
-    self.cache_file = "/tmp/rcron.cache"
+    self.cache_file = "/tmp/pyrcron.cache"
     #set where the temp cache file should be written
     self.cache_file_temp = "%s.tmp" % self.cache_file
     #how many minutes before the cache is assumed stale
     self.cache_stale_mins = 5
     #encryption/decryption key for cache file
     self.cache_file_key = "8a10465a559947c58983516a6ce179b6bd52e4df7b39aef75d43c7e27892450b"
-    #what is the maximum number of threads that rcron should use
+    #what is the maximum number of threads that pyrcron should use
     self.max_threads = 4
 ```
   * lib/helper.py
@@ -71,9 +71,9 @@ of the id_rsa file)
     pool_size = 4
 ```
 
-to run, add rcron.py to a cron or add it as a service to run every minute.  rcron will cache all cron data to 
+to run, add pyrcron.py to a cron or add it as a service to run every minute.  pyrcron will cache all cron data to 
 self.cache_file (AES encrypted to ensure security of auth information) and use self.cache_file_temp when decrypting
-and reading (will be deleted after).  rcron keeps track of which crons are running by writing 
-/tmp/<sha256hash_of_cron_path_host_user_action>.rcron files in an attempt to keep multiple instances of the same
+and reading (will be deleted after).  pyrcron keeps track of which crons are running by writing 
+/tmp/<sha256hash_of_cron_path_host_user_action>.pyrcron files in an attempt to keep multiple instances of the same
 cron from running.  so, if you change any of those items for a cron between cron runs, it will be possible that any currently running cron will not be seen as "the same"; remember this if 
 action=3 or it could result in multiple versions of the same cron running simultaneously.
