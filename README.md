@@ -10,7 +10,8 @@ Remote cron (via ssh)
 
 ## why?
 I was tired of managing multiple crons on multiple systems, so I wrote this quick code 
-to allow me to ssh to different systems and run arbitrary scripts.
+to consolidate and automate this by securely (via ssh) connecting to different systems to
+run scripts.
 
 ## how?
 rcron is pretty basic, but any cron will require at least 3 items: auth, system, and a cron.
