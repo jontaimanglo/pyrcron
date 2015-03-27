@@ -40,6 +40,34 @@ of the id_rsa file)
     * 3: if previous cron is still running during next cron interval, clobber and start new.  this is useful
     for long running crons
 
+#configure
+  * rcron.py
+```
+    #set where the cache file should be written
+    self.cache_file = "/tmp/rcron.cache"
+    #set where the temp cache file should be written
+    self.cache_file_temp = "%s.tmp" % self.cache_file
+    #how many minutes before the cache is assumed stale
+    self.cache_stale_mins = 5
+    #encryption/decryption key for cache file
+    self.cache_file_key = "8a10465a559947c58983516a6ce179b6bd52e4df7b39aef75d43c7e27892450b"
+    #what is the maximum number of threads that rcron should use
+    self.max_threads = 4
+```
+  * lib/helper.py
+```
+    #set appropriate values within the dbConnect() function for your mysql server.  ssl connections are
+    supported if ssl_ca, ssl_cert, and ssl_key variables are set to other than None.
+    db_host = "127.0.0.1"
+    db_user = "root"
+    db_passwd = "root"
+    ssl_ca = None #"/path/to/ca"
+    ssl_cert = None #"/path/to/cert"
+    ssl_key = None #"/path/to/key"
+    max_pools = 2
+    pool_size = 4
+```
+
 to run, add rcron.py to a cron or add it as a service to run every minute.  rcron will cache all cron data to 
 self.cache_file (AES encrypted to ensure security of auth information) and use self.cache_file_temp when decrypting
 and reading (will be deleted after).  rcron keeps track of which crons are running by writing 
